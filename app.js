@@ -8,10 +8,54 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var petRouter = require('./routes/pet');
 var starsRouter = require('./routes/stars');
-var slotRouter = require('./routes/slot');
+var slotRouter = require('./routes/pet');
+var pet = require('./models/pet');
+var resourceRouter = require('./routes/resource');
 
-var app = express();
 
+const connectionString = process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString,
+{ useNewUrlParser: true, useUnifiedTopology: true });
+
+//Get the default connection
+var db = mongoose.connection;
+//Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once("open", function(){
+console.log("Connection to DB succeeded");
+});
+
+// We can seed the collection if needed on server start
+async function recreateDB(){
+  // Delete everything
+  
+  await pet.deleteMany();
+  let instance1 = new pet({ name:"tOMMY", age:2 , gender:"Male" });
+  let instance2 = new pet({ name:"jimmy", age:1 , gender:"Male" });
+  let instance3 = new pet({ name:"Maxi", age:3 , gender:"Male" });
+
+  instance1.save( function(err, doc) {
+  if(err) return console.error(err);
+  console.log("First object saved")
+  });
+
+  instance2.save( function(err, doc) {
+    if(err) return console.error(err);
+    console.log("second object saved")
+    });
+
+  instance3.save( function(err, doc) {
+      if(err) return console.error(err);
+      console.log("Third object saved")
+      });
+  }
+
+  let reseed = true;
+  if (reseed) { recreateDB();}
+
+  var app = express();
+  
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -27,6 +71,7 @@ app.use('/users', usersRouter);
 app.use('/pet', petRouter);
 app.use('/stars', starsRouter);
 app.use('/slot', slotRouter);
+app.use('/resource', resourceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
