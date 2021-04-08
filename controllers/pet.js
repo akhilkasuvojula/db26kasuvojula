@@ -40,3 +40,23 @@ exports.pet_view_all_Page = async function(req, res) {
     res.error(500,`{"error": ${err}}`);
     }
     };
+
+    // Handle Costume create on POST.
+exports.pet_create_post = async function(req, res) {
+    console.log(req.body)
+    let document = new pet();
+    // We are looking for a body, since POST does not have query parameters.
+    // Even though bodies can be in many different formats, we will be picky
+    // and require that it be a json object
+    
+    document.name = req.body.name;
+    document.age = req.body.age;
+    document.gender = req.body.gender;
+    try{
+    let result = await document.save();
+    res.send(result);
+    }
+    catch(err){
+    res.error(500,`{"error": ${err}}`);
+    }
+    };
