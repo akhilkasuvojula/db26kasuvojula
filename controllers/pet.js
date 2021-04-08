@@ -9,7 +9,7 @@ exports.pet_list = async function(req, res) {
         catch(err){
             res.error(500, `{"error": ${err}}`);
         }
-        
+
 res.send('NOT IMPLEMENTED: pet list');
 };
 // for a specific pet.
@@ -28,3 +28,15 @@ res.send('NOT IMPLEMENTED: pet delete DELETE ' + req.params.id);
 exports.pet_update_put = function(req, res) {
 res.send('NOT IMPLEMENTED: pet update PUT' + req.params.id);
 };
+
+// VIEWS
+// Handle a show all view
+exports.pet_view_all_Page = async function(req, res) {
+    try{
+    thepet = await pet.find();
+    res.render('pet', { title: 'pet Search Results', results: thepet });
+    }
+    catch(err){
+    res.error(500,`{"error": ${err}}`);
+    }
+    };
