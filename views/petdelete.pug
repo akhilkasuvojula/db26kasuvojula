@@ -1,0 +1,43 @@
+extends layout
+
+block content
+    h1= title
+
+    - let petid = toShow._id
+    - let petname = toShow.name
+    - let petage = toShow.age
+    - let petgender = toShow.gender
+
+    div
+        div.row
+            div(class='costumeAttr mr-3') pet ID is:
+            div(id="petid") #{petid}
+        div.row
+            div(class='costumeAttr mr-3') pet name is:
+            div #{petname}
+        div.row
+            div(class='costumeAttr mr-3') pet age is:
+            div #{petage}
+        div.row
+            div(class='costumeAttr mr-3') pet gender is:
+            div #{petgender}
+        div.row
+            button(class='btn btn-danger btn-md m-auto'  type="Submit" onclick=`deletepet()`) Delete
+
+    script.
+        function deletepet() {
+            let value=document.getElementById("petid").innerHTML;
+            console.log(value)
+            // TODO do something here to show user that form is being submitted
+            fetch('/resource/pet/'+ value, {
+                method: 'DELETE'
+            }).then((resp) => {
+                return resp.json(); // or resp.text() or whatever the server sends
+            }).then((body) => {
+                alert("Delete succeded")
+                 // TODO handle body
+            }).catch((error) => {
+                // TODO handle error
+                alert("Delete failed " + error )
+            });
+        };

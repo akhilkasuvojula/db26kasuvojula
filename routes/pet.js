@@ -15,3 +15,7 @@ router.get('/create', pet_controlers.pet_create_Page);
 
 /* GET create update page */
 router.get('/update', pet_controlers.pet_update_Page);
+
+/* GET create costume page */
+router.get('/delete', pet_controlers.pet_delete_Page);
+
