@@ -33,9 +33,23 @@ exports.pet_delete = function(req, res) {
 res.send('NOT IMPLEMENTED: pet delete DELETE ' + req.params.id);
 };
 // Handle pet update form on PUT.
-exports.pet_update_put = function(req, res) {
-res.send('NOT IMPLEMENTED: pet update PUT' + req.params.id);
+exports.pet_update_put = async function(req, res) {
+    console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`)
+    try {
+        let toUpdate = await pet.findById( req.params.id)
+        // Do updates of properties
+        if(req.body.name) toUpdate.name = req.body.name;
+        if(req.body.age) toUpdate.age = req.body.age;
+        if(req.body.gender) toUpdate.gender = req.body.gender;
+        let result = await toUpdate.save();
+        console.log("Sucess " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": ${err}: Update for id ${req.params.id} failed`);
+    }
 };
+
 
 // VIEWS
 // Handle a show all view
@@ -49,7 +63,7 @@ exports.pet_view_all_Page = async function(req, res) {
     }
     };
 
-    // Handle Costume create on POST.
+    // Handle pet create on POST.
 exports.pet_create_post = async function(req, res) {
     console.log(req.body)
     let document = new pet();
@@ -68,3 +82,32 @@ exports.pet_create_post = async function(req, res) {
     res.error(500,`{"error": ${err}}`);
     }
     };
+
+    // Handle pet delete form on DELETE.
+exports.pet_delete = async function(req, res) {
+    console.log("delete " + req.params.id)
+    try {
+        result = await pet.findByIdAndDelete( req.params.id)
+        console.log("Removed " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": Error deleting ${err}}`);
+    }
+};
+
+
+// Handle a show one view with id specified by query
+
+exports.pet_view_one_Page = async function(req, res) {
+    console.log("single view for id "  + req.query.id)
+    try{
+        result = await pet.findById( req.query.id)
+        res.render('petdetail',
+{ title: 'Pet Detail', toShow: result });
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};

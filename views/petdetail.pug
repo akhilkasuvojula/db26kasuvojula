@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  h1= title
+
+ 
+  - let petid = toShow._id
+  - let petname = toShow.name 
+  - let petage = toShow.age 
+  - let petgender = toShow.gender 
+
+  div
+    div.row
+      div(class='costumeAttr mr-3') Pet ID is:
+      div #{petid}
+    div.row
+      div(class='costumeAttr mr-3') Pet Name is:
+      div #{petname}
+    div.row
+      div(class='costumeAttr mr-3') Pet age is:
+      div #{petage}
+    div.row
+      div(class='costumeAttr mr-3') Pet gender is:
+      div #{petgender}
+    
