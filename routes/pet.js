@@ -9,3 +9,6 @@ module.exports = router;
 
 /* GET detail pet page */
 router.get('/detail', pet_controlers.pet_view_one_Page);
+
+/* GET create pet page */
+router.get('/create', pet_controlers.pet_create_Page);
