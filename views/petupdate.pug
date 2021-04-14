@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  h1= title
+
+  - let petid = toShow._id
+  - let petname = toShow.name
+  - let petage = toShow.age
+  - let petgender = toShow.gender
+  
+  div.row(class='mb-2')
+    div.mr-1 ID is
+    div #{petid}
+  - let actionid = "/resource/pet/" + petid
+  form(id='PetForm', action= actionid, method="PUT")
+    div.form-group
+        label.costumeAttr(for='name') pet name
+        input#name(type='text', name='name', value= name )
+    div.form-group
+        label.costumeAttr(for='age') pet age
+        input#age(type='text', name='age', value= age )
+    div.form-group
+        label.costumeAttr(for='gender') pet gender
+        input#gender(type='text', name='gender', value= gender )
+    input(type="submit")
+
+  script.
+    document.forms['PetForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      console.log(event.target)
+      // TODO do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method: 'PUT',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Update succeded")
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Update failed " + error )
+      });
+    });

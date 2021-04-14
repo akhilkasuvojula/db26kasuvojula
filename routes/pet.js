@@ -12,3 +12,6 @@ router.get('/detail', pet_controlers.pet_view_one_Page);
 
 /* GET create pet page */
 router.get('/create', pet_controlers.pet_create_Page);
+
+/* GET create update page */
+router.get('/update', pet_controlers.pet_update_Page);
