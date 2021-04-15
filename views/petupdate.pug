@@ -2,6 +2,8 @@ extends layout
 
 block content
   h1= title
+  if (toShow == null)
+    h3 No instance to delete
 
   - let petid = toShow._id
   - let petname = toShow.name
