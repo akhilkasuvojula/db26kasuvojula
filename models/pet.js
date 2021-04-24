@@ -8,7 +8,10 @@ age: {
     max:[15,"Maximum age"]
 
 },
-gender: String
+gender:{
+    type: String,
+    minimumLength: 6
+}
 });
 
 module.exports = mongoose.model("pet", petSchema)

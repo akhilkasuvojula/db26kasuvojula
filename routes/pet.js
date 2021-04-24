@@ -20,11 +20,11 @@ module.exports = router;
 router.get('/detail', pet_controlers.pet_view_one_Page);
 
 /* GET create pet page */
-router.get('/create', pet_controlers.pet_create_Page);
+router.get('/create',secured, pet_controlers.pet_create_Page);
 
 /* GET create update page */
 router.get('/update',secured, pet_controlers.pet_update_Page);
 
 /* GET create costume page */
-router.get('/delete', pet_controlers.pet_delete_Page);
+router.get('/delete',secured, pet_controlers.pet_delete_Page);
 
