@@ -1,7 +1,13 @@
 const mongoose = require("mongoose")
 const petSchema = mongoose.Schema({
 name: String,
-age: Number,
+age: {
+    type: Number,
+
+    min:[1,"Minimum age"],
+    max:[15,"Maximum age"]
+
+},
 gender: String
 });
 
